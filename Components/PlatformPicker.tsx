@@ -4,7 +4,12 @@ import { BsChevronBarDown, BsChevronDown } from "react-icons/bs";
 import { Platform } from "@/Interface/IGamrEmpire";
 import RawgAPI from "@/pages/api/RAWGAPI";
 
-function PlatformPicker() {
+interface Props {
+  onSelect: (platform: Platform) => void;
+  selectedPlatform: Platform | null;
+}
+
+function PlatformPicker({ onSelect, selectedPlatform }: Props) {
   const [platforms, setPlatforms] = useState<Platform[]>([]);
   const [error, setError] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -32,11 +37,20 @@ function PlatformPicker() {
   return (
     <Menu>
       <MenuButton as={Button} rightIcon={<BsChevronDown />}>
-        Platforms
+        {selectedPlatform ? selectedPlatform?.name : "Platforms"}
       </MenuButton>
       <MenuList>
         {platforms.map((platform) => {
-          return <MenuItem key={platform.id}>{platform.name}</MenuItem>;
+          return (
+            <MenuItem
+              onClick={() => {
+                onSelect(platform);
+              }}
+              key={platform.id}
+            >
+              {platform.name}
+            </MenuItem>
+          );
         })}
       </MenuList>
     </Menu>

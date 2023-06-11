@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Grid, GridItem, Show, Box,Flex } from "@chakra-ui/react";
+import { Grid, GridItem, Show, Box, Flex } from "@chakra-ui/react";
 import NavBar from "./NavBar";
 import GameGrid from "./GameGrid";
 import GenreList from "./GenreList";
@@ -42,12 +42,12 @@ function HomeLayout() {
       <GridItem area="main">
         <Box paddingLeft={10}>
           <Flex paddingTop={5}>
-            <Box marginRight={5}> 
-            <PlatformPicker />
+            <Box marginRight={5}>
+              <PlatformPicker onSelect={selectPlatformHandler} selectedPlatform={selectedPlatform}/>
             </Box>
           </Flex>
         </Box>
-        <GameGrid selectedGenre={selectedGenre} />
+        <GameGrid selectedGenre={selectedGenre} selectedPlatform={selectedPlatform}/>
       </GridItem>
     </Grid>
   );

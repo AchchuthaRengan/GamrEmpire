@@ -1,4 +1,4 @@
-import { Game, Genre } from "@/Interface/IGamrEmpire";
+import { Game, Genre, Platform } from "@/Interface/IGamrEmpire";
 import RawgAPI from "@/pages/api/RAWGAPI";
 import { SimpleGrid } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
@@ -8,9 +8,10 @@ import CardSkeleton from "./CardSkeleton";
 
 interface Props {
   selectedGenre: Genre | null;
+  selectedPlatform: Platform | null;
 }
 
-function GameGrid({ selectedGenre }: Props) {
+function GameGrid({ selectedGenre, selectedPlatform }: Props) {
   const skeletons = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15];
   const [games, setGames] = useState<Game[]>([]);
   const [error, setError] = useState<string>("");
@@ -25,6 +26,7 @@ function GameGrid({ selectedGenre }: Props) {
           signal: controller.signal,
           params: {
             genres: selectedGenre?.id,
+            platforms: selectedPlatform?.id,
           },
         });
         const data = await response.data.results;
@@ -37,7 +39,7 @@ function GameGrid({ selectedGenre }: Props) {
       }
     };
     getGames();
-  }, [selectedGenre?.id]);
+  }, [selectedGenre?.id, selectedPlatform?.id]);
 
   return (
     <SimpleGrid
