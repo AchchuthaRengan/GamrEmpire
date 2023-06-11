@@ -1,5 +1,5 @@
 import React from "react";
-import { Grid,GridItem,Show } from "@chakra-ui/react";
+import { Grid, GridItem, Show } from "@chakra-ui/react";
 import NavBar from "./NavBar";
 import GameGrid from "./GameGrid";
 import GenreList from "./GenreList";
@@ -10,23 +10,23 @@ function HomeLayout() {
       templateAreas={{
         base: `"nav" ""main`,
         lg: `"nav nav" "aside main"`,
-      }}   
+      }}
       templateColumns={{
         base: "1fr",
         lg: "200px 1fr",
-      }}   
+      }}
     >
-        <GridItem area='nav' borderBottom='2px' padding='10px'>
-            <NavBar/>
-        </GridItem>        
-        <Show above='lg'>
-        <GridItem area='aside'>
-            <GenreList/>
+      <GridItem area="nav" borderBottom="2px" padding="10px">
+        <NavBar />
+      </GridItem>
+      <Show above="lg">
+        <GridItem area="aside">
+          <GenreList />
         </GridItem>
-        </Show>
-        <GridItem area='main'>            
-            <GameGrid/>
-        </GridItem>
+      </Show>
+      <GridItem area="main">
+        <GameGrid />
+      </GridItem>
     </Grid>
   );
 }
