@@ -6,6 +6,7 @@ import GenreList from "./GenreList";
 import { IGameQuery, IGenre, IPlatform } from "@/Interface/IGamrEmpire";
 import PlatformPicker from "./PlatformPicker";
 import SortSelector from "./SortSelector";
+import MainHeading from "./MainHeading";
 
 function HomeLayout() {
 
@@ -58,6 +59,7 @@ function HomeLayout() {
       </Show>
       <GridItem area="main">
         <Box paddingLeft={10}>
+          <MainHeading gameQuery={gameQuery}/>
           <Flex paddingTop={5}>
             <Box marginRight={5}>
               <PlatformPicker
