@@ -3,32 +3,38 @@ import { Grid, GridItem, Show, Box, Flex } from "@chakra-ui/react";
 import NavBar from "./NavBar";
 import GameGrid from "./GameGrid";
 import GenreList from "./GenreList";
-import { Genre, Platform } from "@/Interface/IGamrEmpire";
+import { IGameQuery, IGenre, IPlatform } from "@/Interface/IGamrEmpire";
 import PlatformPicker from "./PlatformPicker";
 import SortSelector from "./SortSelector";
 
 function HomeLayout() {
-  const [selectedGenre, setSelectedGenre] = useState<Genre | null>(null);
-  const [selectedPlatform, setSelectedPlatform] = useState<Platform | null>(
-    null
-  );
-  const [selectedSorting, setSelectedSorting] = useState<string>("");
-  const [searchedString, setSearchedString] = useState<string>("");
 
-  const selectGenreHandler = (genre: Genre) => {
-    setSelectedGenre(genre);
+  //Previously Implemented For Easy Implementation -- Not Refactored
+
+  // const [selectedGenre, setSelectedGenre] = useState<Genre | null>(null);
+  // const [selectedPlatform, setSelectedPlatform] = useState<Platform | null>(
+  //   null
+  // );
+  // const [selectedSorting, setSelectedSorting] = useState<string>("");
+  // const [searchedString, setSearchedString] = useState<string>("");
+
+  const [gameQuery, setGameQuery] = useState<IGameQuery>({} as IGameQuery);
+
+  const selectGenreHandler = (genre: IGenre) => {
+    //Passing All existing gameQuery(platforms, sortOrder, search) with the new Genre is through a object with the spread Operator
+    setGameQuery({...gameQuery,genre});
   };
 
-  const selectPlatformHandler = (platform: Platform) => {
-    setSelectedPlatform(platform);
+  const selectPlatformHandler = (platform: IPlatform) => {
+    setGameQuery({...gameQuery,platform});
   };
 
-  const selectOrderingHandler = (order: string) => {
-    setSelectedSorting(order);
+  const selectOrderingHandler = (sortOrder: string) => {
+    setGameQuery({...gameQuery,sortOrder});
   };
 
   const searchHandler = (search: string) => {
-    setSearchedString(search);
+    setGameQuery({...gameQuery,search});
   };
 
   return (
@@ -47,7 +53,7 @@ function HomeLayout() {
       </GridItem>
       <Show above="lg">
         <GridItem area="aside" paddingX={5} paddingTop={5} borderRight='2px'>
-          <GenreList onSelect={selectGenreHandler} selectedGenre={selectedGenre}/>
+          <GenreList onSelect={selectGenreHandler} selectedGenre={gameQuery.genre}/>
         </GridItem>
       </Show>
       <GridItem area="main">
@@ -56,20 +62,21 @@ function HomeLayout() {
             <Box marginRight={5}>
               <PlatformPicker
                 onSelect={selectPlatformHandler}
-                selectedPlatform={selectedPlatform}
+                selectedPlatform={gameQuery.platform}
               />
             </Box>
             <SortSelector
-              sortOrder={selectedSorting}
+              sortOrder={gameQuery.sortOrder}
               onSelect={selectOrderingHandler}
             />
           </Flex>
         </Box>
         <GameGrid
-          selectedGenre={selectedGenre}
-          selectedPlatform={selectedPlatform}
-          selectedSorting={selectedSorting}
-          searchedString={searchedString}
+          // selectedGenre={gameQuery.genre}
+          // selectedPlatform={gameQuery.platform}
+          // selectedSorting={gameQuery.sortOrder}
+          // searchedString={gameQuery.search}
+          gameQuery={gameQuery}
         />
       </GridItem>
     </Grid>

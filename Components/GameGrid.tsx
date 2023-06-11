@@ -1,50 +1,28 @@
-import { Game, Genre, Platform } from "@/Interface/IGamrEmpire";
+import { IGame, IGameQuery } from "@/Interface/IGamrEmpire";
 import RawgAPI from "@/pages/api/RAWGAPI";
 import { SimpleGrid } from "@chakra-ui/react";
-import { useEffect, useState } from "react";
 import GameCard from "./GameCard";
 import CardWrapper from "./CardWrapper";
 import CardSkeleton from "./CardSkeleton";
+import useGames from "@/Hooks/useGames";
 
 interface Props {
-  selectedGenre: Genre | null;
-  selectedPlatform: Platform | null;
-  selectedSorting:string;
-  searchedString:string;
+  // selectedGenre: IGenre | null;
+  // selectedPlatform: IPlatform | null;
+  // selectedSorting:string;
+  // searchedString:string;
+  gameQuery: IGameQuery
 }
 
-function GameGrid({ selectedGenre, selectedPlatform,selectedSorting,searchedString }: Props) {
+function GameGrid({gameQuery}: Props) {
+  
+  const {data, error, isLoading} = useGames(gameQuery);
   const skeletons = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15];
-  const [games, setGames] = useState<Game[]>([]);
-  const [error, setError] = useState<string>("");
-  const [isLoading, setIsLoading] = useState<boolean>(false);
-
-  useEffect(() => {
-    const controller = new AbortController();
-    const getGames = async () => {
-      try {
-        setIsLoading(true);
-        const response = await RawgAPI.get("/games", {
-          signal: controller.signal,
-          params: {
-            genres: selectedGenre?.id,
-            platforms: selectedPlatform?.id,
-            ordering: selectedSorting,
-            search:searchedString
-          },
-        });
-        const data = await response.data.results;
-        setGames(data);
-        setIsLoading(false);
-      } catch (error: any) {
-        setIsLoading(true);
-        setError(error);
-        setIsLoading(false);
-      }
-    };
-    getGames();
-  }, [selectedGenre?.id, selectedPlatform?.id,selectedSorting,searchedString]);
-
+  
+  // const [games, setGames] = useState<IGame[]>([]);
+  // const [error, setError] = useState<string>("");
+  // const [isLoading, setIsLoading] = useState<boolean>(false);
+  
   return (
     <SimpleGrid
       columns={{ sm: 1, md: 2, lg: 3, xl: 4 }}
@@ -57,10 +35,10 @@ function GameGrid({ selectedGenre, selectedPlatform,selectedSorting,searchedStri
             <CardSkeleton key={card} />
           </CardWrapper>
         ))}
-      {games &&
+      {data &&
         !isLoading &&
         !error &&
-        games.map((game) => {
+        data.map((game:IGame) => {
           return (
             <CardWrapper key={game.id}>
               <GameCard game={game} />

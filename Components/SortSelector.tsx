@@ -25,7 +25,7 @@ function SortSelector({sortOrder,onSelect}:Props) {
     </MenuButton>
     <MenuList>
         {sortOrders.map((sort) => {
-            return <MenuItem value={sort.value} onClick={() => {
+            return <MenuItem value={sort.value} key={sort.value} onClick={() => {
                 onSelect(sort.value)
             }}>{sort.label}</MenuItem>
         })}

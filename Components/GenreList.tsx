@@ -1,7 +1,5 @@
 import React from "react";
-import { useEffect, useState } from "react";
-import RawgAPI from "@/pages/api/RAWGAPI";
-import { Genre } from "@/Interface/IGamrEmpire";
+import { IGenre } from "@/Interface/IGamrEmpire";
 import {
   Heading,
   List,
@@ -12,36 +10,40 @@ import {
   Spinner,
 } from "@chakra-ui/react";
 import cropperImageService from "@/Extensions/CropperImageService";
+import useGenres from "@/Hooks/useGenres";
 
 interface Props {
-  onSelect: (genre: Genre) => void;
-  selectedGenre: Genre | null;
+  onSelect: (genre: IGenre) => void;
+  selectedGenre: IGenre | null;
 }
 
 function GenreList({ onSelect, selectedGenre }: Props) {
-  const [genres, setGenres] = useState<Genre[]>([]);
-  const [error, setError] = useState<string>("");
-  const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  useEffect(() => {
-    const controller = new AbortController();
-    const getGenres = async () => {
-      try {
-        setIsLoading(true);
-        const response = await RawgAPI.get("/genres", {
-          signal: controller.signal,
-        });
-        const data = await response.data.results;
-        setGenres(data);
-        setIsLoading(false);
-      } catch (error: any) {
-        setIsLoading(true);
-        setError(error);
-        setIsLoading(false);
-      }
-    };
-    getGenres();
-  }, []);
+  const {data, error, isLoading} = useGenres();
+
+  // const [genres, setGenres] = useState<IGenre[]>([]);
+  // const [error, setError] = useState<string>("");
+  // const [isLoading, setIsLoading] = useState<boolean>(false);
+
+  // useEffect(() => {
+  //   const controller = new AbortController();
+  //   const getGenres = async () => {
+  //     try {
+  //       setIsLoading(true);
+  //       const response = await RawgAPI.get("/genres", {
+  //         signal: controller.signal,
+  //       });
+  //       const data = await response.data.results;
+  //       setGenres(data);
+  //       setIsLoading(false);
+  //     } catch (error: any) {
+  //       setIsLoading(true);
+  //       setError(error);
+  //       setIsLoading(false);
+  //     }
+  //   };
+  //   getGenres();
+  // }, []);
 
   return (
     <>
@@ -50,10 +52,10 @@ function GenreList({ onSelect, selectedGenre }: Props) {
       </Heading>
       <List>
         {isLoading && <Spinner />}
-        {genres &&
+        {data &&
           !isLoading &&
           !error &&
-          genres.map((genre) => {
+          data.map((genre:IGenre) => {
             return (
               <ListItem key={genre.id} paddingY="5px">
                 <HStack>
