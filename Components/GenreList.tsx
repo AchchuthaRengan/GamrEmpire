@@ -9,6 +9,7 @@ import {
   Image,
   HStack,
   Button,
+  Spinner
 } from "@chakra-ui/react";
 import cropperImageService from "@/Extensions/CropperImageService";
 
@@ -48,6 +49,7 @@ function GenreList({onSelect}:Props) {
         Genres
       </Heading>
       <List>
+        {isLoading && <Spinner/>}
         {genres &&
           !isLoading &&
           !error &&
