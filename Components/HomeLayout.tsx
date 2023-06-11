@@ -1,6 +1,7 @@
 import React from "react";
 import { Grid,GridItem,Show } from "@chakra-ui/react";
 import NavBar from "./NavBar";
+import GameGrid from "./GameGrid";
 
 function HomeLayout() {
   return (
@@ -18,8 +19,8 @@ function HomeLayout() {
             Genres
         </GridItem>
         </Show>
-        <GridItem area='main'>
-            Games
+        <GridItem area='main'>            
+            <GameGrid/>
         </GridItem>
     </Grid>
   );
