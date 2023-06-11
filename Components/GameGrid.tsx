@@ -3,6 +3,7 @@ import RawgAPI from "@/pages/api/RAWGAPI";
 import { SimpleGrid } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import GameCard from "./GameCard";
+import CardWrapper from "./CardWrapper";
 
 function GameGrid() {
   const [games, setGames] = useState<Game[]>([]);
@@ -30,15 +31,21 @@ function GameGrid() {
   }, []);
 
   return (
-    <SimpleGrid>
-      <ul>
+    <SimpleGrid
+      columns={{ sm: 1, md: 2, lg: 3, xl: 4 }}
+      padding={10}
+      spacing={6}
+    >      
         {games &&
           !isLoading &&
           !error &&
           games.map((game) => {
-            return <GameCard game={game} />;
-          })}
-      </ul>
+            return (
+              <CardWrapper key={game.id}>
+                <GameCard game={game} />
+              </CardWrapper>
+            );
+          })}      
     </SimpleGrid>
   );
 }

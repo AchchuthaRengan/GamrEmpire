@@ -9,7 +9,11 @@ function HomeLayout() {
       templateAreas={{
         base: `"nav" ""main`,
         lg: `"nav nav" "aside main"`,
-      }}      
+      }}   
+      templateColumns={{
+        base: "1fr",
+        lg: "200px 1fr",
+      }}   
     >
         <GridItem area='nav' borderBottom='2px' padding='10px'>
             <NavBar/>
