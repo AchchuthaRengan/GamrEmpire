@@ -22,7 +22,7 @@ function GameCard({ game }: Props) {
         alt={game.name}
       />
       <CardBody>
-        <HStack justifyContent={'space-between'}>
+        <HStack justifyContent={'space-between'} marginBottom={3}>
           <Platforms
             platforms={
               game &&
@@ -30,7 +30,7 @@ function GameCard({ game }: Props) {
               game.parent_platforms.map((p) => p.platform)
             }
           />        
-          <MetaCriticScrore/>
+          <MetaCriticScrore score={game && game.metacritic}/>
         </HStack>
         <Heading fontSize="2xl">{game.name}</Heading>
       </CardBody>
