@@ -13,7 +13,6 @@ import {
 } from "@chakra-ui/react";
 import cropperImageService from "@/Extensions/CropperImageService";
 
-
 interface Props {
   onSelect:(genre: Genre) => void; 
 }

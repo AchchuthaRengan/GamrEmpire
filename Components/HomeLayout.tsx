@@ -1,18 +1,25 @@
-import React,{useState} from "react";
-import { Grid, GridItem, Show } from "@chakra-ui/react";
+import React, { useState } from "react";
+import { Grid, GridItem, Show, Box,Flex } from "@chakra-ui/react";
 import NavBar from "./NavBar";
 import GameGrid from "./GameGrid";
 import GenreList from "./GenreList";
-import { Genre } from "@/Interface/IGamrEmpire";
+import { Genre, Platform } from "@/Interface/IGamrEmpire";
+import PlatformPicker from "./PlatformPicker";
 
 function HomeLayout() {
-
   const [selectedGenre, setSelectedGenre] = useState<Genre | null>(null);
+  const [selectedPlatform, setSelectedPlatform] = useState<Platform | null>(
+    null
+  );
 
-  const selectGenreHandler = (genre:Genre) => {
+  const selectGenreHandler = (genre: Genre) => {
     setSelectedGenre(genre);
-  }
-  
+  };
+
+  const selectPlatformHandler = (platform: Platform) => {
+    setSelectedPlatform(platform);
+  };
+
   return (
     <Grid
       templateAreas={{
@@ -29,11 +36,18 @@ function HomeLayout() {
       </GridItem>
       <Show above="lg">
         <GridItem area="aside">
-          <GenreList onSelect={selectGenreHandler}/>
+          <GenreList onSelect={selectGenreHandler} />
         </GridItem>
       </Show>
       <GridItem area="main">
-        <GameGrid selectedGenre={selectedGenre}/>
+        <Box paddingLeft={10}>
+          <Flex paddingTop={5}>
+            <Box marginRight={5}> 
+            <PlatformPicker />
+            </Box>
+          </Flex>
+        </Box>
+        <GameGrid selectedGenre={selectedGenre} />
       </GridItem>
     </Grid>
   );
