@@ -9,15 +9,16 @@ import {
   Image,
   HStack,
   Button,
-  Spinner
+  Spinner,
 } from "@chakra-ui/react";
 import cropperImageService from "@/Extensions/CropperImageService";
 
 interface Props {
-  onSelect:(genre: Genre) => void; 
+  onSelect: (genre: Genre) => void;
+  selectedGenre: Genre | null;
 }
 
-function GenreList({onSelect}:Props) {
+function GenreList({ onSelect, selectedGenre }: Props) {
   const [genres, setGenres] = useState<Genre[]>([]);
   const [error, setError] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -48,7 +49,7 @@ function GenreList({onSelect}:Props) {
         Genres
       </Heading>
       <List>
-        {isLoading && <Spinner/>}
+        {isLoading && <Spinner />}
         {genres &&
           !isLoading &&
           !error &&
@@ -72,6 +73,9 @@ function GenreList({onSelect}:Props) {
                     variant="link"
                     whiteSpace="normal"
                     textAlign="left"
+                    fontWeight={
+                      genre.id === selectedGenre?.id ? "bold" : "normal"
+                    }
                     onClick={() => {
                       onSelect(genre);
                     }}

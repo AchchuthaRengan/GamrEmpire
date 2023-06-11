@@ -3,9 +3,13 @@ import { HStack, Heading } from "@chakra-ui/react";
 import SearchBar from "./SearchBar";
 import ThemeToggler from "./ThemeToggler";
 
-function NavBar() {
+interface Props {
+  onSearch:(search:string) => void;
+}
+
+function NavBar({onSearch}:Props) {
   return (
-    <HStack justifyContent='space-evenly'>
+    <HStack padding="10px">
       <Heading
         fontSize={{ base: "18px", md: "40px", lg: "56px" }}
         fontWeight="500"
@@ -13,7 +17,7 @@ function NavBar() {
       >
         Gamr Empire
       </Heading>      
-      <SearchBar/>
+      <SearchBar onSearch={onSearch}/>
       <ThemeToggler/>      
     </HStack>
   );

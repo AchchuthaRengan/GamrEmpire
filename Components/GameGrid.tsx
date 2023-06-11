@@ -9,9 +9,11 @@ import CardSkeleton from "./CardSkeleton";
 interface Props {
   selectedGenre: Genre | null;
   selectedPlatform: Platform | null;
+  selectedSorting:string;
+  searchedString:string;
 }
 
-function GameGrid({ selectedGenre, selectedPlatform }: Props) {
+function GameGrid({ selectedGenre, selectedPlatform,selectedSorting,searchedString }: Props) {
   const skeletons = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15];
   const [games, setGames] = useState<Game[]>([]);
   const [error, setError] = useState<string>("");
@@ -27,6 +29,8 @@ function GameGrid({ selectedGenre, selectedPlatform }: Props) {
           params: {
             genres: selectedGenre?.id,
             platforms: selectedPlatform?.id,
+            ordering: selectedSorting,
+            search:searchedString
           },
         });
         const data = await response.data.results;
@@ -39,7 +43,7 @@ function GameGrid({ selectedGenre, selectedPlatform }: Props) {
       }
     };
     getGames();
-  }, [selectedGenre?.id, selectedPlatform?.id]);
+  }, [selectedGenre?.id, selectedPlatform?.id,selectedSorting,searchedString]);
 
   return (
     <SimpleGrid
