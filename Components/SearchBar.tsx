@@ -1,10 +1,12 @@
 import React from 'react';
-import { Grid, GridItem, Show, HStack, Heading,InputGroup,Input } from "@chakra-ui/react";
+import { InputLeftElement,InputGroup,Input } from "@chakra-ui/react";
+import { BsSearch } from "react-icons/bs";
 
 function SearchBar() {
-  return (
+  return (    
     <InputGroup>
-        <Input borderRadius={20} placeholder='Search Games' variant='filled'>
+        <InputLeftElement children={<BsSearch/>}/>
+        <Input borderRadius={20} placeholder='Search Games' variant='filled' borderWidth='2px' borderStyle='solid' borderColor='white'>
         </Input>
     </InputGroup>
   )

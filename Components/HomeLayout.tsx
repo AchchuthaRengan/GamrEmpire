@@ -8,10 +8,10 @@ function HomeLayout() {
       templateAreas={{
         base: `"nav" ""main`,
         lg: `"nav nav" "aside main"`,
-      }}
+      }}      
     >
-        <GridItem area='nav'>
-            NavBar
+        <GridItem area='nav' borderBottom='2px' padding='10px'>
+            <NavBar/>
         </GridItem>        
         <Show above='lg'>
         <GridItem area='aside'>
