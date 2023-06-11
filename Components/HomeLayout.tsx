@@ -1,10 +1,18 @@
-import React from "react";
+import React,{useState} from "react";
 import { Grid, GridItem, Show } from "@chakra-ui/react";
 import NavBar from "./NavBar";
 import GameGrid from "./GameGrid";
 import GenreList from "./GenreList";
+import { Genre } from "@/Interface/IGamrEmpire";
 
 function HomeLayout() {
+
+  const [selectedGenre, setSelectedGenre] = useState<Genre | null>(null);
+
+  const selectGenreHandler = (genre:Genre) => {
+    setSelectedGenre(genre);
+  }
+  
   return (
     <Grid
       templateAreas={{
@@ -21,11 +29,11 @@ function HomeLayout() {
       </GridItem>
       <Show above="lg">
         <GridItem area="aside">
-          <GenreList />
+          <GenreList onSelect={selectGenreHandler}/>
         </GridItem>
       </Show>
       <GridItem area="main">
-        <GameGrid />
+        <GameGrid selectedGenre={selectedGenre}/>
       </GridItem>
     </Grid>
   );

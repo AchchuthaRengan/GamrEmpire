@@ -12,7 +12,12 @@ import {
 } from "@chakra-ui/react";
 import cropperImageService from "@/Extensions/CropperImageService";
 
-function GenreList() {
+
+interface Props {
+  onSelect:(genre: Genre) => void; 
+}
+
+function GenreList({onSelect}:Props) {
   const [genres, setGenres] = useState<Genre[]>([]);
   const [error, setError] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -66,7 +71,9 @@ function GenreList() {
                     variant="link"
                     whiteSpace="normal"
                     textAlign="left"
-
+                    onClick={() => {
+                      onSelect(genre);
+                    }}
                   >
                     {genre.name}
                   </Button>

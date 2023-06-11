@@ -1,11 +1,16 @@
-import { Game } from "@/Interface/IGamrEmpire";
+import { Game, Genre } from "@/Interface/IGamrEmpire";
 import RawgAPI from "@/pages/api/RAWGAPI";
 import { SimpleGrid } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import GameCard from "./GameCard";
 import CardWrapper from "./CardWrapper";
 
-function GameGrid() {
+
+interface Props {
+  selectedGenre:Genre | null
+}
+
+function GameGrid({selectedGenre}:Props) {
   const [games, setGames] = useState<Game[]>([]);
   const [error, setError] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -17,6 +22,9 @@ function GameGrid() {
         setIsLoading(true);
         const response = await RawgAPI.get("/games", {
           signal: controller.signal,
+          params:{
+            genres:selectedGenre?.id
+          }
         });
         const data = await response.data.results;
         setGames(data);
@@ -28,7 +36,9 @@ function GameGrid() {
       }
     };
     getGames();
-  }, []);
+  }, [selectedGenre?.id]);
+
+  console.log(games);
 
   return (
     <SimpleGrid
